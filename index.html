@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeRoute Navigator - Enhanced Safety Navigation</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="LOGO/public/placeholder-logo.svg">
+    <link rel="icon" type="image/png" href="LOGO/public/placeholder-logo.png">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Leaflet Routing Machine CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-foreground">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-container loading-logo">
+                <img src="LOGO/public/placeholder-logo.svg" alt="SafeRoute Logo" class="logo-image" />
+            </div>
+            <h1 class="loading-title">SafeRoute</h1>
+            <p class="loading-subtitle">Enhanced Safety Navigation</p>
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <p class="loading-status">Initializing...</p>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="app" class="app hidden">
+        <!-- Header / Navbar -->
+        <header class="header">
+            <div class="header-container">
+                <a href="#" class="flex items-center gap-2 nav-link" data-page="home">
+                    <div class="logo-container">
+                        <img src="LOGO/public/placeholder-logo.svg" alt="SafeRoute Logo" class="logo-image" />
+                    </div>
+                    <span class="logo-text">SafeRoute</span>
+                </a>
+                <nav class="nav-desktop">
+                    <a href="#" class="nav-item nav-link" data-page="home">Home</a>
+                    <a href="#" class="nav-item nav-link" data-page="dashboard">Dashboard</a>
+                    <a href="#" class="nav-item nav-link" data-page="reports">Reports</a>
+                    <a href="#" class="nav-item nav-link" data-page="profile">Profile</a>
+                    <a href="#" class="btn btn-primary nav-link" data-page="login">Login</a>
+                </nav>
+                <button id="mobile-menu-button" class="mobile-menu-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu">
+            <div class="mobile-menu-header">
+                <h2>Menu</h2>
+                <button id="close-mobile-menu-button" class="close-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <nav class="mobile-nav">
+                <a href="#" class="mobile-nav-item nav-link" data-page="home">Home</a>
+                <a href="#" class="mobile-nav-item nav-link" data-page="dashboard">Dashboard</a>
+                <a href="#" class="mobile-nav-item nav-link" data-page="reports">Reports</a>
+                <a href="#" class="mobile-nav-item nav-link" data-page="profile">Profile</a>
+                <a href="#" class="mobile-nav-item nav-link" data-page="login">Login</a>
+            </nav>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast-notification" class="toast">
+            <p id="toast-message"></p>
+        </div>
+
+        <main>
+            <!-- Home Page Content -->
+            <div id="page-home" class="page-container">
+                <section class="hero-section">
+                    <div class="hero-container">
+                        <div class="hero-content">
+                            <div class="hero-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                                <span>SafeRoute Navigator</span>
+                            </div>
+                            <h1 class="hero-title">Your Safer Path, Always</h1>
+                            <p class="hero-description">Find safer travel routes, share your journey, and reach help fast. Designed with a focus on women's safety—simple, fast, and reliable.</p>
+                            <div class="hero-actions">
+                                <a href="#" class="btn btn-primary btn-large nav-link" data-page="dashboard">Get Started</a>
+                                <a href="#about" class="btn btn-outline btn-large">Learn More</a>
+                            </div>
+                        </div>
+                        <div class="hero-image">
+                            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Modern navigation app interface with safety features">
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="about" class="features-section">
+                    <div class="features-container">
+                        <div class="features-header">
+                            <h2>Features Built For Your Safety</h2>
+                            <p>Everything you need to travel with confidence.</p>
+                        </div>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <h3>Safer Routes</h3>
+                                <p>Search routes with safety scores to make informed travel decisions.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                                </div>
+                                <h3>One-Tap Emergency</h3>
+                                <p>Quick-dial police, ambulance, or trusted contacts right from the map.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8-5.6.8 4.1 4-1 5.7L12 16l5.1 2.7-1-5.7 4.1-4-5.6-.8z"/></svg>
+                                </div>
+                                <h3>Community Reports</h3>
+                                <p>See crowdsourced reports for streetlight issues or suspicious areas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Login Page Content -->
+            <div id="page-login" class="page-container">
+                <div class="login-container">
+                    <div class="login-card">
+                        <div class="login-header">
+                            <h1>Welcome Back</h1>
+                            <p>Sign in to continue to SafeRoute Navigator.</p>
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <form id="login-form" class="login-form">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                    <input id="email" type="email" placeholder="jane@example.com" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <input id="password" type="password" class="form-input" />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                        </form>
+                        
+                        <!-- Registration Form (Hidden by default) -->
+                        <form id="register-form" class="login-form hidden">
+                            <div class="form-group">
+                                <label for="reg-name">Full Name</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <input id="reg-name" type="text" placeholder="John Doe" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-email">Email</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                    <input id="reg-email" type="email" placeholder="john@example.com" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-password">Password</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <input id="reg-password" type="password" class="form-input" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-confirm-password">Confirm Password</label>
+                                <div class="input-wrapper">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <input id="reg-confirm-password" type="password" class="form-input" />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                        </form>
+                        
+                        <!-- Form Toggle Buttons -->
+                        <div class="form-toggle">
+                            <button id="show-login" class="toggle-btn active">Login</button>
+                            <button id="show-register" class="toggle-btn">Register</button>
+                        </div>
+                        
+                        <!-- Emergency Access -->
+                        <div class="emergency-access">
+                            <button id="emergency-login" class="btn btn-emergency btn-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.7 12.3c.3-1.3-1-2.5-2.2-2.5h-1.2v-1.1c0-1.2-1.3-2.2-2.5-2.2H9.3c-1.2 0-2.5 1-2.5 2.2V11H5.7c-1.2 0-2.5 1.2-2.2 2.5l1 4.1c.2 1 1.2 1.9 2.2 1.9h8.6c1 0 2-1 2.2-1.9l1-4.1Z"/></svg>
+                                Emergency Access
+                            </button>
+                            <p class="emergency-note">Use in case of emergency to bypass login</p>
+                        </div>
+                        
+                        <div class="login-footer">
+                            <a href="#" class="nav-link" data-page="home">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dashboard Page Content -->
+            <div id="page-dashboard" class="page-container">
+                <div id="map-container" class="map-container">
+                    <div id="map"></div>
+                    
+                    <!-- Navigation Panel -->
+                    <div id="navigation-panel" class="navigation-panel">
+                        <div class="nav-content">
+                            <div id="nav-icon" class="nav-icon"></div>
+                            <div class="nav-info">
+                                <p id="nav-instruction" class="nav-instruction">Starting route...</p>
+                                <p id="nav-distance" class="nav-distance"></p>
+                            </div>
+                            <div class="nav-summary">
+                               <p id="nav-summary-time" class="nav-time"></p>
+                               <p id="nav-summary-distance" class="nav-distance-info"></p>
+                            </div>
+                            <button id="stop-nav-btn" class="stop-nav-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Route Planning UI -->
+                    <div id="route-planning-ui" class="route-planning-ui">
+                        <div class="route-card">
+                            <div class="route-inputs">
+                                <input id="start-location" placeholder="Start location" class="route-input" />
+                                <input id="end-location" placeholder="Destination" class="route-input" />
+                            </div>
+                            <div class="route-actions">
+                                <button id="find-police-btn" class="btn btn-outline btn-small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                                    Find Nearest Police
+                                </button>
+                                <button id="find-hospital-btn" class="btn btn-outline btn-small">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M10 12h4"></path></svg>
+                                    Find Nearest Hospital
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Safety Score Container -->
+                    <div id="safety-score-container" class="safety-score-container hidden">
+                        <div class="safety-card">
+                            <div class="safety-header">
+                                <span class="safety-label">Safety:</span>
+                                <span id="safety-score" class="safety-score">--</span>
+                                <div id="safety-indicator" class="safety-indicator"></div>
+                            </div>
+                            <div id="route-options-container" class="route-options"></div>
+                            <div id="navigation-controls" class="navigation-controls hidden">
+                                <button id="start-nav-btn" class="btn btn-success btn-full">Start Navigation</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Location Button -->
+                    <button id="locate-btn" class="locate-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V2"/><path d="M12 22v-6"/><path d="M22 12h-6"/><path d="M8 12H2"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/></svg>
+                    </button>
+                    
+                    <!-- Action Hub -->
+                    <div id="actions-hub" class="actions-hub">
+                        <button id="share-btn" class="action-btn share-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                            <span class="action-tooltip">Share Route</span>
+                        </button>
+                        <button id="emergency-btn" class="action-btn emergency-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.7 12.3c.3-1.3-1-2.5-2.2-2.5h-1.2v-1.1c0-1.2-1.3-2.2-2.5-2.2H9.3c-1.2 0-2.5 1-2.5 2.2V11H5.7c-1.2 0-2.5 1.2-2.2 2.5l1 4.1c.2 1 1.2 1.9 2.2 1.9h8.6c1 0 2-1 2.2-1.9l1-4.1Z"/><path d="m11.3 2.5 3.3 3.3"/><path d="M6.8 5.8 3.5 2.5"/><path d="M12 18v2.5"/><path d="M4 14h.01"/><path d="M20 14h.01"/></svg>
+                            <span class="action-tooltip">Emergency</span>
+                        </button>
+                        <button id="report-btn" class="action-btn report-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+                            <span class="action-tooltip">Report Incident</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reports Page -->
+            <div id="page-reports" class="page-container">
+                <div class="reports-container">
+                    <h1 class="page-title">Community Reports</h1>
+                    <div id="reports-list" class="reports-list"></div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="page-profile" class="page-container">
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <h2>Profile Settings</h2>
+                        <div class="profile-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input id="name" value="Jane Doe" class="form-input" />
+                            </div>
+                            <div class="form-group">
+                                <label>Theme</label>
+                                <div id="theme-switcher" class="theme-switcher">
+                                    <button data-theme="light" class="theme-btn">Light</button>
+                                    <button data-theme="dark" class="theme-btn">Dark</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button id="save-profile" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h2>Trusted Contacts</h2>
+                        <div id="contacts-list" class="contacts-list"></div>
+                        <div class="profile-actions">
+                            <button id="add-contact" class="btn btn-outline">Add Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Emergency Modal -->
+        <div id="emergency-modal" class="emergency-modal hidden">
+            <div class="emergency-content">
+                <div class="emergency-header">
+                    <div class="emergency-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.7 12.3c.3-1.3-1-2.5-2.2-2.5h-1.2v-1.1c0-1.2-1.3-2.2-2.5-2.2H9.3c-1.2 0-2.5 1-2.5 2.2V11H5.7c-1.2 0-2.5 1.2-2.2 2.5l1 4.1c.2 1 1.2 1.9 2.2 1.9h8.6c1 0 2-1 2.2-1.9l1-4.1Z"/></svg>
+                    </div>
+                    <h2>Emergency Actions</h2>
+                </div>
+                <div class="emergency-actions">
+                    <a id="sos-btn" href="#" class="btn btn-emergency">SOS</a>
+                    <a href="tel:100" class="btn btn-outline">Call Police (100)</a>
+                    <a id="text-contacts-btn" href="#" class="btn btn-outline">Text Trusted Contacts</a>
+                </div>
+                <button id="close-emergency-modal" class="btn btn-outline btn-full">Close</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; <span id="current-year"></span> SafeRoute Navigator. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+        <!-- External JavaScript -->
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
+
